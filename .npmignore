@@ -1,0 +1,7 @@
+/lib/*.js.map
+/lib/*.test.js
+/src/
+/test/
+/coverage/
+*.tgz
+.travis.yml
