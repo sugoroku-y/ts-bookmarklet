@@ -9,6 +9,9 @@
     "test": "jest"
   },
   "keywords": [],
+  "repository": {
+    "url": "https://github.com/sugoroku-y/ts-bookmarklet.git"
+  },
   "author": {
     "name": "YEBISUYA Sugoroku",
     "email": "yebisuya@gmail.com",
