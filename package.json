@@ -42,7 +42,6 @@
         "tsConfig": "src/tsconfig.json"
       }
     },
-    "collectCoverage": true,
     "collectCoverageFrom": [
       "**/src/*.ts",
       "!**/src/main.ts"
