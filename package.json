@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "TypeScript compiler for bookmarklet",
   "main": "lib/main.js",
+  "bin": "bin/ts-bookmarklet.js",
   "scripts": {
     "build": "tsc --build src/tsconfig.json",
     "prepare": "npm run build",
