@@ -1,6 +1,6 @@
 {
   "name": "ts-bookmarklet",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "TypeScript compiler for bookmarklet",
   "main": "lib/main.js",
   "bin": "bin/ts-bookmarklet.js",
