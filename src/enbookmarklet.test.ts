@@ -1,5 +1,5 @@
 import ts from 'typescript';
-import {enbookmarklet, loadConfig} from './enbookmarklet';
+import {enbookmarklet, loadConfig, convertTarget} from './enbookmarklet';
 
 test('noop.ts', () => {
   expect(enbookmarklet(['test/noop.ts'])).toBe('javascript:(()=>{})()');
@@ -63,4 +63,17 @@ test('loadConfig non-existent', () => {
 });
 test('loadConfig tsconfig-error', () => {
   expect(() => loadConfig('test/tsconfig-error.json')).toThrowError();
+});
+
+test('', () => {
+  expect(convertTarget('ES3')).toBe(ts.ScriptTarget.ES3);
+  expect(convertTarget('ES5')).toBe(ts.ScriptTarget.ES5);
+  expect(convertTarget('ES2015')).toBe(ts.ScriptTarget.ES2015);
+  expect(convertTarget('ES2016')).toBe(ts.ScriptTarget.ES2016);
+  expect(convertTarget('ES2017')).toBe(ts.ScriptTarget.ES2017);
+  expect(convertTarget('ES2018')).toBe(ts.ScriptTarget.ES2018);
+  expect(convertTarget('ES2019')).toBe(ts.ScriptTarget.ES2019);
+  expect(convertTarget('ES2020')).toBe(ts.ScriptTarget.ES2020);
+  expect(convertTarget('ESNext')).toBe(ts.ScriptTarget.ESNext);
+  expect(() => convertTarget('ES1' as any)).toThrowError('Unsupported target: ES1');
 });

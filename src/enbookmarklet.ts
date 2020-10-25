@@ -92,6 +92,46 @@ function diagnosticsToText(
     .join('\n');
 }
 
+function assertNever(_: never, message?: string): never {
+  throw new Error(message ?? 'unreachable');
+}
+
+export function convertTarget(
+  target:
+    | 'ES3'
+    | 'ES5'
+    | 'ES2015'
+    | 'ES2016'
+    | 'ES2017'
+    | 'ES2018'
+    | 'ES2019'
+    | 'ES2020'
+    | 'ESNext'
+): ts.ScriptTarget {
+  switch (target) {
+    case 'ES3':
+      return ts.ScriptTarget.ES3;
+    case 'ES5':
+      return ts.ScriptTarget.ES5;
+    case 'ES2015':
+      return ts.ScriptTarget.ES2015;
+    case 'ES2016':
+      return ts.ScriptTarget.ES2016;
+    case 'ES2017':
+      return ts.ScriptTarget.ES2017;
+    case 'ES2018':
+      return ts.ScriptTarget.ES2018;
+    case 'ES2019':
+      return ts.ScriptTarget.ES2019;
+    case 'ES2020':
+      return ts.ScriptTarget.ES2020;
+    case 'ESNext':
+      return ts.ScriptTarget.ESNext;
+    default:
+      assertNever(target, `Unsupported target: ${target}`);
+  }
+}
+
 export function loadConfig(
   tsconfig: string | undefined
 ): ts.CompilerOptions | undefined {

@@ -1,8 +1,28 @@
 import * as optionalist from 'optionalist';
-import {enbookmarklet, loadConfig} from './enbookmarklet';
+import {enbookmarklet, loadConfig, convertTarget} from './enbookmarklet';
 
 // コマンドラインオプション解析
-const {tsconfig, [optionalist.unnamed]: filenames} = optionalist.parse({
+const {
+  tsconfig,
+  [optionalist.unnamed]: filenames,
+  target,
+} = optionalist.parse({
+  target: {
+    describe: '出力するjavascriptのバージョンを指定します。IE11でも使用できるようにするにはES5を指定します。',
+    constraints: [
+      'ES3',
+      'ES5',
+      'ES2015',
+      'ES2016',
+      'ES2017',
+      'ES2018',
+      'ES2019',
+      'ES2020',
+      'ESNext',
+    ],
+    ignoreCase: true,
+    example: 'ES3|ES5|ES2015|ES2016|ES2017|ES2018|ES2019|ES2020|ESNext'
+  },
   tsconfig: {
     alias: 't',
     describe: 'TypeScriptのコンパイル時に使用する設定ファイル。',
@@ -18,11 +38,14 @@ const {tsconfig, [optionalist.unnamed]: filenames} = optionalist.parse({
     describe:
       'TypeScriptをコンパイルしてブックマークレット用のURLを出力します。',
   },
-});
+} as const);
 
 try {
   // 設定ファイルからコンパイラオプション取得
   const compilerOptions = loadConfig(tsconfig);
+  if (target && compilerOptions) {
+    compilerOptions.target = convertTarget(target);
+  }
   const bookmarklet = enbookmarklet(filenames, compilerOptions);
   console.log(bookmarklet);
 } catch (ex) {

@@ -20,7 +20,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "optionalist": "^1.0.3",
+    "optionalist": "^1.0.5",
     "typescript": "^4.0.3",
     "uglify-es": "^3.3.9"
   },
