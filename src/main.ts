@@ -2,13 +2,10 @@ import * as optionalist from 'optionalist';
 import {enbookmarklet, loadConfig, convertTarget} from './enbookmarklet';
 
 // コマンドラインオプション解析
-const {
-  tsconfig,
-  [optionalist.unnamed]: filenames,
-  target,
-} = optionalist.parse({
+const {tsconfig, [optionalist.unnamed]: filenames, target} = optionalist.parse({
   target: {
-    describe: '出力するjavascriptのバージョンを指定します。IE11でも使用できるようにするにはES5を指定します。',
+    describe:
+      '出力するjavascriptのバージョンを指定します。IE11でも使用できるようにするにはES5を指定します。',
     constraints: [
       'ES3',
       'ES5',
@@ -21,7 +18,7 @@ const {
       'ESNext',
     ],
     ignoreCase: true,
-    example: 'ES3|ES5|ES2015|ES2016|ES2017|ES2018|ES2019|ES2020|ESNext'
+    example: 'ES3|ES5|ES2015|ES2016|ES2017|ES2018|ES2019|ES2020|ESNext',
   },
   tsconfig: {
     alias: 't',

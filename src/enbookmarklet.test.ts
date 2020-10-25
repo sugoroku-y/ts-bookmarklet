@@ -1,4 +1,4 @@
-import { resolve } from 'path';
+import {resolve} from 'path';
 import ts from 'typescript';
 import {enbookmarklet, loadConfig, convertTarget} from './enbookmarklet';
 
@@ -27,10 +27,10 @@ test('showtitle.ts options', () => {
 });
 
 test('showtitle.ts options.ESNext', () => {
-  const spyLog = jest.spyOn(console, 'warn')
-  spyLog.mockImplementation(x => x)
-  expect(
-   ()=> enbookmarklet(['test/showtitle.ts'], {
+  const spyLog = jest.spyOn(console, 'warn');
+  spyLog.mockImplementation(x => x);
+  expect(() =>
+    enbookmarklet(['test/showtitle.ts'], {
       target: ts.ScriptTarget.ESNext,
       lib: ['lib.esnext.d.ts', 'lib.dom.d.ts', 'lib.dom.iterable.d.ts'],
       strict: true,
@@ -44,7 +44,9 @@ test('showtitle.ts options.ESNext', () => {
   expect(console.warn).toBeCalled();
 });
 test('error.ts', () => {
-  expect(() => enbookmarklet(['test/error.ts'])).toThrowError(/^SemanticError\b/);
+  expect(() => enbookmarklet(['test/error.ts'])).toThrowError(
+    /^SemanticError\b/
+  );
 });
 test('loadConfig', () => {
   expect(loadConfig(undefined, 'test/error/nowhere.ts')).toBeUndefined();
@@ -69,10 +71,14 @@ test('loadConfig', () => {
   });
 });
 test('loadConfig non-existent', () => {
-  expect(() => loadConfig('non-existent-directory/tsconfig.json', 'test/error.ts')).toThrowError();
+  expect(() =>
+    loadConfig('non-existent-directory/tsconfig.json', 'test/error.ts')
+  ).toThrowError();
 });
 test('loadConfig tsconfig-error', () => {
-  expect(() => loadConfig('test/tsconfig-error.json', 'test/error.ts')).toThrowError();
+  expect(() =>
+    loadConfig('test/tsconfig-error.json', 'test/error.ts')
+  ).toThrowError();
 });
 
 test('', () => {
@@ -85,5 +91,7 @@ test('', () => {
   expect(convertTarget('ES2019')).toBe(ts.ScriptTarget.ES2019);
   expect(convertTarget('ES2020')).toBe(ts.ScriptTarget.ES2020);
   expect(convertTarget('ESNext')).toBe(ts.ScriptTarget.ESNext);
-  expect(() => convertTarget('ES1' as any)).toThrowError('Unsupported target: ES1');
+  expect(() => convertTarget('ES1' as any)).toThrowError(
+    'Unsupported target: ES1'
+  );
 });
