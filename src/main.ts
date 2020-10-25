@@ -42,7 +42,7 @@ const {
 
 try {
   // 設定ファイルからコンパイラオプション取得
-  const compilerOptions = loadConfig(tsconfig);
+  const compilerOptions = loadConfig(tsconfig, filenames[0]);
   if (target && compilerOptions) {
     compilerOptions.target = convertTarget(target);
   }

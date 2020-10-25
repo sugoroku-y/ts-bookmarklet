@@ -1,3 +1,4 @@
+import { resolve } from 'path';
 import ts from 'typescript';
 import {enbookmarklet, loadConfig, convertTarget} from './enbookmarklet';
 
@@ -46,11 +47,11 @@ test('error.ts', () => {
   expect(() => enbookmarklet(['test/error.ts'])).toThrowError(/^SemanticError\b/);
 });
 test('loadConfig', () => {
-  expect(loadConfig(undefined)).toBeUndefined();
+  expect(loadConfig(undefined, 'test/error/nowhere.ts')).toBeUndefined();
 });
 test('loadConfig', () => {
   const configFilePath = 'test/tsconfig.json';
-  expect(loadConfig(configFilePath)).toEqual({
+  expect(loadConfig(configFilePath, 'test/error/nowhere.ts')).toEqual({
     configFilePath,
     target: ts.ScriptTarget.ES2018,
     lib: ['lib.esnext.d.ts', 'lib.dom.d.ts', 'lib.dom.iterable.d.ts'],
@@ -58,11 +59,20 @@ test('loadConfig', () => {
     strictNullChecks: true,
   });
 });
+test('loadConfig', () => {
+  expect(loadConfig(undefined, 'test/error.ts')).toEqual({
+    configFilePath: resolve('test/tsconfig.json').replace(/\\/g, '/'),
+    target: ts.ScriptTarget.ES2018,
+    lib: ['lib.esnext.d.ts', 'lib.dom.d.ts', 'lib.dom.iterable.d.ts'],
+    strict: true,
+    strictNullChecks: true,
+  });
+});
 test('loadConfig non-existent', () => {
-  expect(() => loadConfig('non-existent-directory/tsconfig.json')).toThrowError();
+  expect(() => loadConfig('non-existent-directory/tsconfig.json', 'test/error.ts')).toThrowError();
 });
 test('loadConfig tsconfig-error', () => {
-  expect(() => loadConfig('test/tsconfig-error.json')).toThrowError();
+  expect(() => loadConfig('test/tsconfig-error.json', 'test/error.ts')).toThrowError();
 });
 
 test('', () => {

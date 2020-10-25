@@ -25,8 +25,11 @@ TypeScriptからトランスパイルされたJavaScriptは、さらにuglify-es
 ## Commandline Options - コマンドラインオプション
 
 - `--tsconfig tsconfig.json` | `-t tsconfig.json`  
-  typescriptのコンパイルに使用する設定を記述したファイルを指定します。
-  省略時には以下の設定が指定されたものとしてコンパイルします。
+  typescriptのコンパイルに使用する設定を記述したファイルを指定します。  
+  省略時には一番最初のソースファイルと同じディレクトリにある  
+  `tsconfig.json`を指定したものと見なします。  
+  ディレクトリに`tsconfig.json`が見つからない場合には、  
+  以下の設定が指定されたものとしてコンパイルします。
 
   ```json
   {
@@ -47,7 +50,7 @@ TypeScriptからトランスパイルされたJavaScriptは、さらにuglify-es
   }
   ```
   
-  tsconfig.jsonを指定した場合、以下のオプションについては、  
+  tsconfig.jsonを指定した場合でも、以下のオプションについては、  
   設定されていなければTypeScriptのデフォルト値ではなく、  
   以下の値が使用されます。
   

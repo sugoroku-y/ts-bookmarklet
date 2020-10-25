@@ -133,11 +133,17 @@ export function convertTarget(
 }
 
 export function loadConfig(
-  tsconfig: string | undefined
+  tsconfig: string | undefined,
+  source: string
 ): ts.CompilerOptions | undefined {
   // 設定ファイルの指定なし
   if (!tsconfig) {
-    return undefined;
+    // ソースと同じディレクトリにあるtsconfig.json
+    tsconfig = resolve(source, '..', 'tsconfig.json');
+    if (!ts.sys.fileExists(tsconfig)) {
+      // 存在していなければデフォルト設定
+      return undefined;
+    }
   }
   const {config, error} = ts.readConfigFile(tsconfig, ts.sys.readFile);
   if (error) {
