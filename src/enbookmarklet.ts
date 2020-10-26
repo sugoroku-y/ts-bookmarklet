@@ -163,7 +163,8 @@ export function loadConfig(
 
 export function enbookmarklet(
   filenames: readonly string[],
-  compilerOptions?: ts.CompilerOptions
+  compilerOptions?: ts.CompilerOptions,
+  noScheme?: true
 ) {
   // 設定ファイルが指定されなかったときのデフォルト設定
   compilerOptions ??= {
@@ -268,8 +269,9 @@ export function enbookmarklet(
       }`
     );
   })();
-  // ES2015より前の場合はarrow関数が使えないのでfunctionを使う
-  return `javascript:${
+  // schemeが不要な場合はjavascript:を出力しない
+  return `${noScheme ? '' : 'javascript:'}${
+    // ES2015より前の場合はarrow関数が使えないのでfunctionを使う
     compilerOptions.target < ts.ScriptTarget.ES2015 ? '(function(){' : '(()=>{'
   }${minified}})()`;
 }

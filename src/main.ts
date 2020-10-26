@@ -2,7 +2,12 @@ import * as optionalist from 'optionalist';
 import {enbookmarklet, loadConfig, convertTarget} from './enbookmarklet';
 
 // コマンドラインオプション解析
-const {tsconfig, [optionalist.unnamed]: filenames, target} = optionalist.parse({
+const {
+  tsconfig,
+  [optionalist.unnamed]: filenames,
+  target,
+  'no-scheme': noScheme,
+} = optionalist.parse({
   target: {
     describe:
       '出力するjavascriptのバージョンを指定します。IE11でも使用できるようにするにはES5を指定します。',
@@ -19,6 +24,10 @@ const {tsconfig, [optionalist.unnamed]: filenames, target} = optionalist.parse({
     ],
     ignoreCase: true,
     example: 'ES3|ES5|ES2015|ES2016|ES2017|ES2018|ES2019|ES2020|ESNext',
+  },
+  'no-scheme': {
+    type: 'boolean',
+    describe: '`javascript:`を出力しない場合に指定します。',
   },
   tsconfig: {
     alias: 't',
@@ -43,7 +52,7 @@ try {
   if (target && compilerOptions) {
     compilerOptions.target = convertTarget(target);
   }
-  const bookmarklet = enbookmarklet(filenames, compilerOptions);
+  const bookmarklet = enbookmarklet(filenames, compilerOptions, noScheme);
   console.log(bookmarklet);
 } catch (ex) {
   console.error(ex.toString());
